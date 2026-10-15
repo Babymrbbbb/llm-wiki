@@ -22,6 +22,36 @@
 3. **聚合页生成**：聚合页的「摘要 / 关键事实 / 概念描述」为多源综合描述，每条标注来源。
 4. **局部重编**：新源加入后，只重编该聚合页（`--local-rebuild`），不触发全量。
 
+## 自动化聚合（进阶：高频概念自动生成聚合页）
+
+`build_wiki.py` 的 AGG 注释块解决了「聚合索引」的登记，但要真正产出**多源综合的聚合页**，还需要一个自动化步骤：
+
+### generate_agg_pages.py — 高频聚合页生成器
+
+- 读取 `aggregation_index.json`，按「同页面名合并源文件」聚合
+- 对 `source >= min_sources`（默认 5）的高频实体/概念，收集源文件正文（最多 25 源 × 每源前 1500 字符，防提示词超长）
+- 调用 LLM 生成**真正的聚合页**：必须综合多个来源（不是单源转述）、来源列表列全、关键事实跨源标注
+- 品牌实体词表自动修正类型（品牌 → entity，业务概念 → concept）
+- 生成后自动登记 index.md + 字段完整性校验（缺字段提示重编）
+
+```bash
+python generate_agg_pages.py --min-sources 5          # 生成全部高频聚合页
+python generate_agg_pages.py --only 金粒门 玛芝莲     # 只生成指定页
+python generate_agg_pages.py --dry-run                 # 预览将生成的聚合页
+```
+
+### generate_special_pages.py — 对比页 / 综合页自动生成
+
+- **comparison 对比页**：基于两个品牌实体页，自动生成 ≥6 维度对比表（定位/价格带/门店规模/核心品类/营销打法/威胁等级）+ 综合判断
+- **synthesis 综合页**：基于多个相关实体/概念页，自动生成跨源综合 + 3-5 条可落地策略建议
+
+```bash
+python generate_special_pages.py          # 生成预置的 comparison ×3 + synthesis ×3
+python generate_special_pages.py --dry-run
+```
+
+> 这两个自动化脚本是「概念聚合」从索引到成品页的关键闭环，属于品牌知识库的独特自研改造，方法论公开、生产实现不对外。
+
 ## 效果（真实运行）
 
 | 页面 | 来源数 |
