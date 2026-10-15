@@ -30,7 +30,7 @@
 
 ```bash
 # 新增测试源后，局部重编受影响页
-python build_wiki.py --local-rebuild entity/金粒门.md
+python build_wiki.py --local-rebuild entity/竞品A.md
 ```
 
 ## 实测结果

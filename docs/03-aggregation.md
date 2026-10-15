@@ -10,7 +10,7 @@
 
 ```json
 {
-  "entity/金粒门.md": ["竞品动态/2026-07-01.md", "行业趋势/2026-07-10.md", "私域运营/会员体系.md"],
+  "entity/竞品A.md": ["竞品动态/2026-07-01.md", "行业趋势/2026-07-10.md", "私域运营/会员体系.md"],
   "concept/会员体系搭建.md": ["私域运营/会员体系.md", "品牌营销/会员储值.md"]
 }
 ```
@@ -36,7 +36,7 @@
 
 ```bash
 python generate_agg_pages.py --min-sources 5          # 生成全部高频聚合页
-python generate_agg_pages.py --only 金粒门 玛芝莲     # 只生成指定页
+python generate_agg_pages.py --only 竞品A 竞品B       # 只生成指定页
 python generate_agg_pages.py --dry-run                 # 预览将生成的聚合页
 ```
 
