@@ -69,28 +69,27 @@ flowchart TD
 > **核心**：围绕「45 家门店 AI 落地」场景，按真实故障逐步改造成 5 个公开项目 + 2 个桌面软件。每个产出解决一个具体故障。
 
 ```
-接入 AI（gateway）→ 用好 AI（prompt-craft）→ 管理/编译知识（kb-cli + 本仓库）→ 组织 AI 落地（ai-native-team）→ 交付业务结果（驾驶舱 / 指挥台）
+接入 AI（gateway）→ 用好 AI（prompt-craft）→ RAG 知识库（本仓库）→ 组织 AI 落地（ai-native-team）→ 交付业务结果（驾驶舱 / 指挥台）
 ```
 
 ### 本仓库在场景中的位置
 
-**为什么改造**：kb-cli 解决了「原始资料找得到」，但 1,600+ 篇原始资料**不可导航**——人工靠文件名猜、RAG 泛词塌缩、同一主题散落几十篇。不改，知识库越大越难用。
+**为什么改造**：早期 kb-cli 解决了「原始资料找得到」，但 1,600+ 篇原始资料**不可导航**——人工靠文件名猜、RAG 泛词塌缩、同一主题散落几十篇。不改，知识库越大越难用。
 
-**意义**：在 kb-cli 之上加一层**知识编译层**——raw → wiki → RAG 双轨：原始资料保真不可变，编译产物可导航聚合（实体/概念/对比/综合四类页），人工与 RAG 共用同一产物，精确召回大幅提升。
+**意义**：作为 **RAG 知识库的完整实现**替代早期 kb-cli——raw → wiki → RAG 双轨：原始资料保真不可变，编译产物可导航聚合（实体/概念/对比/综合四类页），人工与 RAG 共用同一产物，精确召回大幅提升。
 
 **结合哪些部分**：
-- 检索底座是 **kb-cli**（分层 + 召回优先）
 - 编译过程跑在 **sensenova-gateway** 的稳定模型通道上
 - 自动化聚合由 **ai-native-team** 的知识库每日维护任务驱动
 - 编译产物被 **驾驶舱** 的 AI 结论卡引用
 
-**单独用的价值**：即使不接入其他产出，任何「原始资料上千篇、检索被泛词淹没」的团队都能直接复用这套方法论——概念聚合 + 增量局部重编 + lint 质量门，把原始文档变成可导航知识层。
+**单独用的价值**：即使不接入其他产出，任何「原始资料上千篇、检索被泛词淹没」的团队都能直接复用这套 RAG 方法论——概念聚合 + 增量局部重编 + lint 质量门，把原始文档变成可导航知识层。
 
 ### 相关项目
 
 - **[sensenova-gateway](https://github.com/Babymrbbbb/sensenova-gateway)** — 接入 AI：批量编译的模型稳定性保障
 - **[prompt-craft](https://github.com/Babymrbbbb/prompt-craft)** — 用好 AI：编译提示词与 Schema 契约同源
-- **[kb-cli](https://github.com/Babymrbbbb/kb-cli)** — 管理知识：检索底座
+- **[kb-cli](https://github.com/Babymrbbbb/kb-cli)** — 早期实现：分层 + 召回优先思路的验证原型
 - **[ai-native-team](https://github.com/Babymrbbbb/ai-native-team)** — 组织 AI 落地：知识库每日维护自动化
 
 ## License
